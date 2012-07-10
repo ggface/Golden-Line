@@ -1,0 +1,57 @@
+package D16_SETUP;
+
+{$R *.res}
+{$R *.dres}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION '!Golden Line (by GangrenaGastrit)'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  vcl,
+  vclimg,
+  dbrtl,
+  adortl,
+  IndyCore,
+  IndySystem,
+  IndyProtocols;
+
+contains
+  glButton in 'src\glButton.pas',
+  glCheckBox in 'src\glCheckBox.pas',
+  glConnect in 'src\glConnect.pas',
+  glCurrency in 'src\glCurrency.pas',
+  glCustomObject in 'src\glCustomObject.pas',
+  glHandle in 'src\glHandle.pas',
+  glImageCropper in 'src\glImageCropper.pas',
+  glRegistry in 'src\glRegistry.pas',
+  glSuicide in 'src\glSuicide.pas',
+  glSystem in 'src\glSystem.pas',
+  glViewStateSet in 'src\glViewStateSet.pas',
+  glSQL in 'src\glSQL.pas';
+
+end.
+

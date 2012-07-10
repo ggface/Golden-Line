@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.234,D:\Dropbox\dev.vcl.goldenline\trunk\src\glImageCropper.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.984,=D:\Dropbox\dev.vcl.goldenline\trunk\src\glImageCropper.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.250,D:\Dropbox\dev.vcl.goldenline\trunk\src\glRegistry.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.562,=D:\Dropbox\dev.vcl.goldenline\trunk\img\TglRegistry.bmp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.531,=D:\Dropbox\dev.vcl.goldenline\trunk\src\glSQL.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.593,=IndyProtocols.dcp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.953,=D:\Dropbox\dev.vcl.goldenline\trunk\src\glCurrency.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.546,=D:\Dropbox\dev.vcl.goldenline\trunk\img\TglImageCropper.bmp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.000,=D:\Dropbox\dev.vcl.goldenline\trunk\src\glRegistry.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.984,=D:\Dropbox\dev.vcl.goldenline\trunk\src\glHandle.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.265,D:\Dropbox\dev.vcl.goldenline\trunk\src\glViewStateSet.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.125,D:\Dropbox\dev.vcl.goldenline\trunk\src\glSQL\glSQLQuery.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.453,=D:\Dropbox\dev.vcl.goldenline\trunk\img\TglButton.bmp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.515,=D:\Dropbox\dev.vcl.goldenline\trunk\img\TglCurrency.bmp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.593,=D:\Dropbox\dev.vcl.goldenline\trunk\img\TglViewStateSet.bmp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.031,=D:\Dropbox\dev.vcl.goldenline\trunk\src\glViewStateSet.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.531,=D:\Dropbox\dev.vcl.goldenline\trunk\img\TglHandle.bmp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.234,D:\Dropbox\dev.vcl.goldenline\trunk\src\glCustomObject.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.468,=D:\Dropbox\dev.vcl.goldenline\trunk\img\TglCheckBox.bmp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.015,=D:\Dropbox\dev.vcl.goldenline\trunk\src\glSuicide.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.953,=D:\Dropbox\dev.vcl.goldenline\trunk\src\glConnect.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.234,D:\Dropbox\dev.vcl.goldenline\trunk\src\glConnect.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.921,D:\Dropbox\dev.vcl.goldenline\trunk\Unit1.pas=D:\Dropbox\dev.vcl.goldenline\trunk\src\glSQL\glSQLQuery.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.937,=D:\Dropbox\dev.vcl.goldenline\trunk\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.468,=IndyCore.dcp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.031,=D:\Dropbox\dev.vcl.goldenline\trunk\src\glSystem.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.578,=D:\Dropbox\dev.vcl.goldenline\trunk\img\TglSuicide.bmp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.218,D:\Dropbox\dev.vcl.goldenline\trunk\src\glCheckBox.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.484,=D:\Dropbox\dev.vcl.goldenline\trunk\img\TglConnect.bmp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.968,=D:\Dropbox\dev.vcl.goldenline\trunk\src\glCustomObject.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.937,=D:\Dropbox\dev.vcl.goldenline\trunk\src\glCheckBox.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.218,D:\Dropbox\dev.vcl.goldenline\trunk\src\glButton.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.531,=IndySystem.dcp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.937,=D:\Dropbox\dev.vcl.goldenline\trunk\src\glButton.pas</Transaction>
+    <Transaction>2012.07.10 09:37:23.046,=D:\Dropbox\dev.vcl.goldenline\trunk\img\TglSQL.bmp</Transaction>
+  </Transactions>
+</BorlandProject>
