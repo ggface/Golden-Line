@@ -10,7 +10,6 @@ type
   TglImageCropper = class(TCustomControl)
   private
     fMousePress, fEmpty: boolean;
-    fDebug: string;
     fPhoto: TPicture;
 
     // Для перемещения
@@ -156,9 +155,6 @@ begin
   Canvas.Brush.Color := Color;
   Canvas.Rectangle(BoundsRect);
   Canvas.Draw(0, 0, fMiniBitmap);
-  Canvas.TextOut(0, 100, inttostr(FRect.Left) + ':' + inttostr(FRect.Top) + ':'
-    + inttostr(FRect.Right) + ':' + inttostr(FRect.Bottom) + ' (w' +
-    inttostr(FRect.Right) + ' h' + inttostr(FRect.Bottom) + ')');
 end;
 
 procedure TglImageCropper.PictureChanged(Sender: TObject);
