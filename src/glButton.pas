@@ -5,7 +5,7 @@ interface
 uses
 {$IFDEF VER230} WinAPI.Windows, WinAPI.Messages {$ELSE} Windows, Messages
 {$ENDIF}, SysUtils, Classes, Controls, Graphics, glCustomObject,
-  PNGimage;
+  PNGimage, glButtonPattern;
 
 type
   TglButton = class(TglCustomObject)
@@ -27,6 +27,8 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+
+    procedure Assign(value: TglButtonPattern);
   published
     property ImageLeave: TPicture read fLeave write SetLeaveImage;
     property ImageEnter: TPicture read fEnter write SetEnterImage;
@@ -47,6 +49,14 @@ const
 procedure Register;
 begin
   RegisterComponents('Golden Line', [TglButton]);
+end;
+
+procedure TglButton.Assign(value: TglButtonPattern);
+begin
+  fDown.Assign(value.ImageDown);
+  fLeave.Assign(value.ImageLeave);
+  fEnter.Assign(value.ImageEnter);
+  Invalidate;
 end;
 
 constructor TglButton.Create(AOwner: TComponent);

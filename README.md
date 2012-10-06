@@ -1,4 +1,0 @@
-Golden-Line
-===========
-
-Custom VCL

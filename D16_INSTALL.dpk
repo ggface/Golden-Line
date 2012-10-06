@@ -1,8 +1,6 @@
-package D16_SETUP;
+package D16_INSTALL;
 
 {$R *.res}
-{$R *.dres}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -25,7 +23,6 @@ package D16_SETUP;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION '!Golden Line (by GangrenaGastrit)'}
 {$IMPLICITBUILD ON}
 
@@ -48,10 +45,11 @@ contains
   glHandle in 'src\glHandle.pas',
   glImageCropper in 'src\glImageCropper.pas',
   glRegistry in 'src\glRegistry.pas',
+  glShellTreeView in 'src\glShellTreeView.pas',
+  glSQL in 'src\glSQL.pas',
   glSuicide in 'src\glSuicide.pas',
   glSystem in 'src\glSystem.pas',
   glViewStateSet in 'src\glViewStateSet.pas',
-  glSQL in 'src\glSQL.pas';
+  glButtonPattern in 'src\glButtonPattern.pas';
 
 end.
-

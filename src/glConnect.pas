@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Classes, {$IFDEF VER230} Data.Win.ADODB, System.Win.ComObj
-  {$ELSE} ADODB, ComObj {$ENDIF}, Variants;
+{$ELSE} ADODB, ComObj {$ENDIF}, Variants;
 
 type
   TglConnect = class(TComponent)

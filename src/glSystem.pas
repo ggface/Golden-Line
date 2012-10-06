@@ -30,25 +30,26 @@ end;
 
 function GetUserFromWindows: string;
 var
-  UserName : string;
-  UserNameLen : Dword;
+  Username: string;
+  UserNameLen: dword;
 begin
   UserNameLen := 255;
-  SetLength(userName, UserNameLen);
-  if GetUserName(PChar(UserName), UserNameLen) then
-    Result := Copy(UserName,1,UserNameLen - 1)
+  SetLength(Username, UserNameLen);
+  if GetUserName(pchar(Username), UserNameLen) then
+    result := Copy(Username, 1, UserNameLen - 1)
   else
-    Result := 'Unknown';
+    result := 'Unknown';
 end;
 
 function CountPos(const subtext: string; Text: string): Integer;
- begin
-   if (Length(subtext) = 0) or (Length(Text) = 0) or (Pos(subtext, Text) = 0) then
-     Result := 0
-   else
-     Result := (Length(Text) - Length(StringReplace(Text, subtext, '', [rfReplaceAll]))) div
-       Length(subtext);
- end;
+begin
+  if (Length(subtext) = 0) or (Length(Text) = 0) or (Pos(subtext, Text) = 0)
+  then
+    result := 0
+  else
+    result := (Length(Text) - Length(StringReplace(Text, subtext, '',
+      [rfReplaceAll]))) div Length(subtext);
+end;
 
 function RunAs(Username, Password, CmdString: string): string;
 var

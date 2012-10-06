@@ -70,7 +70,7 @@ procedure Register;
 
 implementation
 
-//{$R glViewStateSet}
+// {$R glViewStateSet}
 
 procedure Register;
 begin
@@ -98,7 +98,7 @@ end;
 
 function TglViewStates.Add: TglViewState;
 begin
-  Result := TglViewState( inherited Add)
+  Result := TglViewState(inherited Add)
 end;
 
 constructor TglViewStates.Create(DappledShape: TglViewStateSet);
@@ -115,7 +115,7 @@ end;
 
 function TglViewStates.GetItem(Index: Integer): TglViewState;
 begin
-  Result := TglViewState( inherited GetItem(Index))
+  Result := TglViewState(inherited GetItem(Index))
 end;
 
 function TglViewStates.GetOwner: TPersistent;

@@ -12,11 +12,19 @@ type
     fMousePress, fEmpty: boolean;
     fDebug: string;
     fPhoto: TPicture;
-    fDrawLeft, fDrawTop, fDragX, fDragY, fX, fY: integer;
-    fBitmap, fWorkBitmap, fMiniBitmap: TBitmap;
+
+    // Для перемещения
+    FStartDragX, FStartDragY: integer;
+
+    FRect, FStartRect: TRect;
+    fBitmap, fMiniBitmap: TBitmap;
     procedure WMMOUSEWHEEL(var msg: TWMMOUSEWHEEL); message WM_MOUSEWHEEL;
     procedure PictureChanged(Sender: TObject);
     procedure SetPhoto(Value: TPicture);
+    procedure DrawMiniBitmap;
+    procedure ScalingRectUp;
+    procedure ScalingRectDown;
+    procedure UpdateRect(Value: TRect);
   protected
     procedure Paint; override;
     procedure MouseDown(Button: TMouseButton; Shift: TShiftState;
@@ -38,6 +46,7 @@ type
     property Align;
     property Color;
     property ParentColor;
+    property OnClick;
   end;
 
 procedure Register;
@@ -59,18 +68,22 @@ begin
   fPhoto.OnChange := PictureChanged;
   fBitmap := TBitmap.Create;
   fMiniBitmap := TBitmap.Create;
-  fWorkBitmap := TBitmap.Create;
   Width := 64;
   Height := 64;
 end;
 
 destructor TglImageCropper.Destroy;
 begin
-  fWorkBitmap.Free;
   fPhoto.Free;
   fBitmap.Free;
   fMiniBitmap.Free;
   inherited;
+end;
+
+procedure TglImageCropper.DrawMiniBitmap;
+begin
+  fMiniBitmap.Canvas.CopyRect(Bounds(0, 0, fMiniBitmap.Width,
+    fMiniBitmap.Height), fBitmap.Canvas, FRect);
 end;
 
 procedure TglImageCropper.FreePhoto;
@@ -90,33 +103,35 @@ procedure TglImageCropper.MouseDown(Button: TMouseButton; Shift: TShiftState;
 begin
   inherited;
   fMousePress := true;
-  fDragX := X;
-  fDragY := Y;
+  FStartDragX := X;
+  FStartDragY := Y;
+  FStartRect := FRect;
 end;
 
 procedure TglImageCropper.MouseMove(Shift: TShiftState; X, Y: integer);
 var
   fTemp: integer;
+  rect: TRect;
 begin
   inherited;
   if fMousePress then
   begin
-    fTemp := (fDrawLeft - (X - fDragX));
+    rect := FRect;
+    fTemp := FStartRect.Left + (FStartDragX - X);
     if (fTemp > -1) and (abs(fTemp) < (fBitmap.Width - fMiniBitmap.Width)) then
-      fX := (fDrawLeft - (X - fDragX));
-
-    fTemp := (fDrawTop - (Y - fDragY));
-    if (fTemp > -1) and
-      (abs(fTemp) < (fBitmap.Height - fMiniBitmap.Height)) then
-      fY := (fDrawTop - (Y - fDragY));
-
     begin
-      fMiniBitmap.Canvas.CopyRect(Bounds(0, 0, fMiniBitmap.Width,
-        fMiniBitmap.Height), fBitmap.Canvas, Bounds(fX, fY, fMiniBitmap.Width,
-        fMiniBitmap.Height));
-
-      invalidate;
+      rect.Left := FStartRect.Left + (FStartDragX - X);
+      rect.Right := FStartRect.Right + (FStartDragX - X);
     end;
+
+    fTemp := FStartRect.Top + (FStartDragY - Y);
+    if (fTemp > -1) and (abs(fTemp) < (fBitmap.Height - fMiniBitmap.Height))
+    then
+    begin
+      rect.Top := FStartRect.Top + (FStartDragY - Y);
+      rect.Bottom := FStartRect.Bottom + (FStartDragY - Y);
+    end;
+    UpdateRect(rect);
   end;
 end;
 
@@ -125,12 +140,11 @@ procedure TglImageCropper.MouseUp(Button: TMouseButton; Shift: TShiftState;
 begin
   inherited;
   fMousePress := False;
-  fDrawLeft := fX;
-  fDrawTop := fY;
 end;
 
 procedure TglImageCropper.Paint;
 begin
+  inherited Paint;
   if (csDesigning in ComponentState) then
   begin
     Canvas.Pen.Color := clGray;
@@ -138,19 +152,21 @@ begin
     Canvas.Brush.Style := bsClear;
     Canvas.Rectangle(0, 0, Width, Height);
   end;
+  Canvas.Pen.Color := Color;
+  Canvas.Brush.Color := Color;
+  Canvas.Rectangle(BoundsRect);
   Canvas.Draw(0, 0, fMiniBitmap);
-  inherited;
+  Canvas.TextOut(0, 100, inttostr(FRect.Left) + ':' + inttostr(FRect.Top) + ':'
+    + inttostr(FRect.Right) + ':' + inttostr(FRect.Bottom) + ' (w' +
+    inttostr(FRect.Width) + ' h' + inttostr(FRect.Height) + ')');
 end;
 
 procedure TglImageCropper.PictureChanged(Sender: TObject);
 begin
-
   fBitmap.SetSize(fPhoto.Width, fPhoto.Height);
   fBitmap.Canvas.Draw(0, 0, fPhoto.Graphic);
   fMiniBitmap.SetSize(Self.Width, Self.Height);
 
-  fDrawLeft := (fBitmap.Width div 2) - (fMiniBitmap.Width div 2);
-  fDrawTop := (fBitmap.Height div 2) - (fMiniBitmap.Height div 2);
   if fBitmap.Empty then
   begin
     fMiniBitmap.Canvas.Pen.Color := Color;
@@ -160,17 +176,69 @@ begin
   end
   else
   begin
-    fMiniBitmap.Canvas.CopyRect(Bounds(0, 0, fMiniBitmap.Width,
-      fMiniBitmap.Height), fBitmap.Canvas, Bounds(fDrawLeft, fDrawTop,
-      fMiniBitmap.Width, fMiniBitmap.Height));
+    UpdateRect(Bounds((fBitmap.Width div 2) - (fMiniBitmap.Width div 2),
+      (fBitmap.Height div 2) - (fMiniBitmap.Height div 2), fMiniBitmap.Width,
+      fMiniBitmap.Height));
     fEmpty := False;
   end;
   invalidate;
 end;
 
+procedure TglImageCropper.ScalingRectDown;
+var
+  rect: TRect;
+  differenceX, differenceY: integer;
+begin
+  rect := FRect;
+  differenceX := (rect.Right - rect.Left) * 5 div 100;
+  rect.Left := rect.Left + differenceX;
+  rect.Right := rect.Right - differenceX;
+
+  differenceY := (rect.Bottom - rect.Top) * 5 div 100;
+  rect.Top := rect.Top + differenceY;
+  rect.Bottom := rect.Bottom - differenceY;
+
+  UpdateRect(rect);
+end;
+
+procedure TglImageCropper.ScalingRectUp;
+var
+  rect: TRect;
+  differenceX, differenceY: integer;
+begin
+  rect := FRect;
+  differenceX := (rect.Right - rect.Left) * 5 div 100;
+  rect.Left := rect.Left - differenceX;
+  rect.Right := rect.Right + differenceX;
+
+  differenceY := (rect.Bottom - rect.Top) * 5 div 100;
+  rect.Top := rect.Top - differenceY;
+  rect.Bottom := rect.Bottom + differenceY;
+
+  UpdateRect(rect);
+end;
+
 procedure TglImageCropper.SetPhoto(Value: TPicture);
 begin
-  fPhoto.Assign(Value);
+  if Value <> fPhoto then
+  begin
+    fPhoto.Assign(Value);
+    invalidate;
+  end;
+end;
+
+procedure TglImageCropper.UpdateRect(Value: TRect);
+begin
+  if Value <> FRect then
+  begin
+    if (Value.Left >= 0) and (Value.Top >= 0) and (Value.Right <= fBitmap.Width)
+      and (Value.Top <= fBitmap.Height) then
+    begin
+      FRect := Value;
+      DrawMiniBitmap;
+      invalidate;
+    end;
+  end;
 end;
 
 procedure TglImageCropper.WMMOUSEWHEEL(var msg: TWMMOUSEWHEEL);
@@ -179,10 +247,9 @@ begin
   if not(csDesigning in ComponentState) then
   begin
     if msg.WheelDelta > 0 then
-      fDebug := 'up'
+      ScalingRectDown
     else
-      fDebug := 'down';
-    invalidate;
+      ScalingRectUp;
   end;
 end;
 

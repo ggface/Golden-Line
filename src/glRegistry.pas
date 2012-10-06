@@ -10,16 +10,16 @@ type
     mValue: Variant;
     mType: TVarType;
   end;
+
   TglRegistry = class(TComponent)
   private
     fCompanyName, fProjectName: string;
   protected
     { Protected declarations }
   public
-    procedure SaveParam(KEY: HKEY; Name: string; Value: variant;
+    procedure SaveParam(KEY: HKEY; Name: string; Value: Variant;
       ValueType: TVarType);
-    function LoadParam(KEY: HKEY; Name: string;
-      ValueType: TVarType): TmyValue;
+    function LoadParam(KEY: HKEY; Name: string; ValueType: TVarType): TmyValue;
     function CheckExistKey(KEY: HKEY; Name: string): boolean;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -32,7 +32,7 @@ procedure Register;
 
 implementation
 
-//{$R glRegistry}
+// {$R glRegistry}
 
 procedure Register;
 begin
@@ -49,7 +49,7 @@ begin
   R := TRegistry.Create;
   R.RootKey := KEY;
   if R.OpenKey('Software\' + CompanyName + '\' + ProjectName + '\', false) then
-    if r.ValueExists(Name) then
+    if R.ValueExists(Name) then
       result := true;
 end;
 
@@ -67,8 +67,8 @@ begin
   inherited;
 end;
 
-function TglRegistry.LoadParam(KEY: HKEY; Name: string;
-  ValueType: TVarType): TmyValue;
+function TglRegistry.LoadParam(KEY: HKEY; Name: string; ValueType: TVarType)
+  : TmyValue;
 var
   R: TRegistry;
 begin
@@ -77,27 +77,27 @@ begin
   R.OpenKey('Software\' + CompanyName + '\' + ProjectName + '\', false);
   if not R.ValueExists(Name) then
   begin
-    Result.mType := varError;
+    result.mType := varError;
     exit;
   end;
-  Result.mType := ValueType;
+  result.mType := ValueType;
   case ValueType of
     varInteger:
-      Result.mValue := R.ReadInteger(Name);
+      result.mValue := R.ReadInteger(Name);
     varString:
-      Result.mValue := R.ReadString(Name);
+      result.mValue := R.ReadString(Name);
     varBoolean:
-      Result.mValue := R.ReadBool(Name);
+      result.mValue := R.ReadBool(Name);
     varDate:
-      Result.mValue := R.ReadDateTime(Name);
+      result.mValue := R.ReadDateTime(Name);
     varDouble:
-      Result.mValue := R.ReadFloat(Name);
+      result.mValue := R.ReadFloat(Name);
   end;
   R.CloseKey;
   R.Free;
 end;
 
-procedure TglRegistry.SaveParam(KEY: HKEY; Name: string; Value: variant;
+procedure TglRegistry.SaveParam(KEY: HKEY; Name: string; Value: Variant;
   ValueType: TVarType);
 var
   R: TRegistry;
@@ -122,4 +122,3 @@ begin
 end;
 
 end.
-

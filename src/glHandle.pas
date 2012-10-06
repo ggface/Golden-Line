@@ -31,7 +31,7 @@ procedure Register;
 
 implementation
 
-//{$R glHandle}
+// {$R glHandle}
 
 procedure Register;
 begin

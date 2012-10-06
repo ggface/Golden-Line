@@ -15,7 +15,7 @@ procedure Register;
 
 implementation
 
-//{$R glSuicide}
+// {$R glSuicide}
 
 procedure tglSuicide.DestroyNow;
 var

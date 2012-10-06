@@ -58,10 +58,10 @@ end;
 function TglCurrency.GetCBRFRates(var USD, EUR, GBP, AUD,
   UAH: Currency): boolean;
 var
-  i:integer;
-  SubStr:string[10];
+  i: integer;
+  SubStr: string[10];
 begin
-// настраиваем блин прокси
+  // настраиваем блин прокси
   with fHTTP.ProxyParams do
   begin
     BasicAuthentication := fAuthentication;
@@ -70,25 +70,30 @@ begin
     ProxyPort := fPort;
     ProxyServer := fHost;
   end;
-//скачиваем файло
+  // скачиваем файло
   fImportList.Text := fHTTP.Get('http://www.rbc.ru/out/802.csv');
-  if Trim(fImportList.Text)='' then
+  if Trim(fImportList.Text) = '' then
   begin
-    result:=false;
+    result := false;
     exit;
   end;
   fHTTP.Disconnect;
-// ищем нужные строки
-  for I := 0 to fImportList.Count - 1 do
-    begin
-      SubStr:=fImportList[i];
-      if SubStr='USD ЦБ РФ,' then USD:=ParseValRBC(fImportList[i]);
-      if SubStr='EUR ЦБ РФ,' then EUR:=ParseValRBC(fImportList[i]);
-      if SubStr='AUD ЦБ РФ,' then AUD:=ParseValRBC(fImportList[i]);
-      if SubStr='GBP ЦБ РФ,' then GBP:=ParseValRBC(fImportList[i]);
-      if SubStr='UAH ЦБ РФ,' then UAH:=ParseValRBC(fImportList[i]);
-    end;
-    result:=true;
+  // ищем нужные строки
+  for i := 0 to fImportList.Count - 1 do
+  begin
+    SubStr := fImportList[i];
+    if SubStr = 'USD ЦБ РФ,' then
+      USD := ParseValRBC(fImportList[i]);
+    if SubStr = 'EUR ЦБ РФ,' then
+      EUR := ParseValRBC(fImportList[i]);
+    if SubStr = 'AUD ЦБ РФ,' then
+      AUD := ParseValRBC(fImportList[i]);
+    if SubStr = 'GBP ЦБ РФ,' then
+      GBP := ParseValRBC(fImportList[i]);
+    if SubStr = 'UAH ЦБ РФ,' then
+      UAH := ParseValRBC(fImportList[i]);
+  end;
+  result := true;
 end;
 
 function TglCurrency.ParseValRBC(instr: string): Currency;
@@ -96,25 +101,24 @@ var
   s: string;
   m, p: integer;
 begin
-//    [USD ЦБ РФ,1 Доллар США,22/12,30.5529,-0.1658]
+  // [USD ЦБ РФ,1 Доллар США,22/12,30.5529,-0.1658]
   s := instr;
-//    [1 Доллар США,22/12,30.5529,-0.1658]
+  // [1 Доллар США,22/12,30.5529,-0.1658]
   Delete(s, 1, pos(',', s));
-//    [1]
-  m := StrToInt(Copy(s, 1, Pos(' ', s) - 1));
-//    [12,30.5529,-0.1658]
+  // [1]
+  m := StrToInt(Copy(s, 1, pos(' ', s) - 1));
+  // [12,30.5529,-0.1658]
   Delete(s, 1, pos('/', s));
-//    [30.5529,-0.1658]
+  // [30.5529,-0.1658]
   Delete(s, 1, pos(',', s));
-//    [30.5529]
+  // [30.5529]
   Delete(s, pos(',', s), 20);
-//    [30,5529]
+  // [30,5529]
   p := pos('.', s);
   Delete(s, p, 1);
   Insert(',', s, p);
-// результат делим на "M"
-  Result := StrToCurr(s) / M;
+  // результат делим на "M"
+  result := StrToCurr(s) / m;
 end;
 
 end.
-
