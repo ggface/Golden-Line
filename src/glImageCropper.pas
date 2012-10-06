@@ -125,8 +125,8 @@ begin
     end;
 
     fTemp := FStartRect.Top + (FStartDragY - Y);
-    if (fTemp > -1) and (abs(fTemp) < (fBitmap.Height - fMiniBitmap.Height))
-    then
+    if (fTemp > -1) and
+      (abs(fTemp) < (fBitmap.Height - fMiniBitmap.Height)) then
     begin
       rect.Top := FStartRect.Top + (FStartDragY - Y);
       rect.Bottom := FStartRect.Bottom + (FStartDragY - Y);
@@ -158,7 +158,7 @@ begin
   Canvas.Draw(0, 0, fMiniBitmap);
   Canvas.TextOut(0, 100, inttostr(FRect.Left) + ':' + inttostr(FRect.Top) + ':'
     + inttostr(FRect.Right) + ':' + inttostr(FRect.Bottom) + ' (w' +
-    inttostr(FRect.Width) + ' h' + inttostr(FRect.Height) + ')');
+    inttostr(FRect.Right) + ' h' + inttostr(FRect.Bottom) + ')');
 end;
 
 procedure TglImageCropper.PictureChanged(Sender: TObject);
@@ -229,16 +229,16 @@ end;
 
 procedure TglImageCropper.UpdateRect(Value: TRect);
 begin
-  if Value <> FRect then
+  // if Value <> FRect then
+  // begin
+  if (Value.Left >= 0) and (Value.Top >= 0) and (Value.Right <= fBitmap.Width)
+    and (Value.Top <= fBitmap.Height) then
   begin
-    if (Value.Left >= 0) and (Value.Top >= 0) and (Value.Right <= fBitmap.Width)
-      and (Value.Top <= fBitmap.Height) then
-    begin
-      FRect := Value;
-      DrawMiniBitmap;
-      invalidate;
-    end;
+    FRect := Value;
+    DrawMiniBitmap;
+    invalidate;
   end;
+  // end;
 end;
 
 procedure TglImageCropper.WMMOUSEWHEEL(var msg: TWMMOUSEWHEEL);
