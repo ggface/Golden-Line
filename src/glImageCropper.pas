@@ -10,7 +10,7 @@ type
   TglImageCropper = class(TCustomControl)
   private
     fMousePress, fEmpty: boolean;
-    fPhoto: TPicture;
+    FPhoto: TPicture;
 
     // Для перемещения
     FStartDragX, FStartDragY: integer;
@@ -36,8 +36,9 @@ type
     destructor Destroy; override;
     procedure FreePhoto;
     function isEmpty: boolean;
+    function GetThumbnail: TJPEGImage;
   published
-    property Photo: TPicture read fPhoto write SetPhoto;
+    property Photo: TPicture read FPhoto write SetPhoto;
     property TabOrder;
     property OnMouseWheel;
     property OnMouseWheelDown;
@@ -63,8 +64,8 @@ constructor TglImageCropper.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   ControlStyle := [csCaptureMouse, csClickEvents, csAcceptsControls];
-  fPhoto := TPicture.Create;
-  fPhoto.OnChange := PictureChanged;
+  FPhoto := TPicture.Create;
+  FPhoto.OnChange := PictureChanged;
   fBitmap := TBitmap.Create;
   fMiniBitmap := TBitmap.Create;
   Width := 64;
@@ -73,7 +74,7 @@ end;
 
 destructor TglImageCropper.Destroy;
 begin
-  fPhoto.Free;
+  FPhoto.Free;
   fBitmap.Free;
   fMiniBitmap.Free;
   inherited;
@@ -87,14 +88,25 @@ end;
 
 procedure TglImageCropper.FreePhoto;
 begin
-  if fPhoto <> nil then
-    fPhoto := nil;
+  if FPhoto <> nil then
+    FPhoto := nil;
   fEmpty := true;
+end;
+
+function TglImageCropper.GetThumbnail;
+var
+  nanoBMP: TBitmap;
+begin
+  nanoBMP := TBitmap.Create;
+  nanoBMP.SetSize(115, 145);
+  nanoBMP.Canvas.StretchDraw(Rect(0, 0, 115, 145), fMiniBitmap);
+  Result := TJPEGImage.Create;
+  Result.Assign(nanoBMP);
 end;
 
 function TglImageCropper.isEmpty: boolean;
 begin
-  result := fEmpty;
+  Result := fEmpty;
 end;
 
 procedure TglImageCropper.MouseDown(Button: TMouseButton; Shift: TShiftState;
@@ -110,27 +122,27 @@ end;
 procedure TglImageCropper.MouseMove(Shift: TShiftState; X, Y: integer);
 var
   fTemp: integer;
-  rect: TRect;
+  Rect: TRect;
 begin
   inherited;
   if fMousePress then
   begin
-    rect := FRect;
+    Rect := FRect;
     fTemp := FStartRect.Left + (FStartDragX - X);
     if (fTemp > -1) and (abs(fTemp) < (fBitmap.Width - fMiniBitmap.Width)) then
     begin
-      rect.Left := FStartRect.Left + (FStartDragX - X);
-      rect.Right := FStartRect.Right + (FStartDragX - X);
+      Rect.Left := FStartRect.Left + (FStartDragX - X);
+      Rect.Right := FStartRect.Right + (FStartDragX - X);
     end;
 
     fTemp := FStartRect.Top + (FStartDragY - Y);
     if (fTemp > -1) and
       (abs(fTemp) < (fBitmap.Height - fMiniBitmap.Height)) then
     begin
-      rect.Top := FStartRect.Top + (FStartDragY - Y);
-      rect.Bottom := FStartRect.Bottom + (FStartDragY - Y);
+      Rect.Top := FStartRect.Top + (FStartDragY - Y);
+      Rect.Bottom := FStartRect.Bottom + (FStartDragY - Y);
     end;
-    UpdateRect(rect);
+    UpdateRect(Rect);
   end;
 end;
 
@@ -159,8 +171,8 @@ end;
 
 procedure TglImageCropper.PictureChanged(Sender: TObject);
 begin
-  fBitmap.SetSize(fPhoto.Width, fPhoto.Height);
-  fBitmap.Canvas.Draw(0, 0, fPhoto.Graphic);
+  fBitmap.SetSize(FPhoto.Width, FPhoto.Height);
+  fBitmap.Canvas.Draw(0, 0, FPhoto.Graphic);
   fMiniBitmap.SetSize(Self.Width, Self.Height);
 
   if fBitmap.Empty then
@@ -182,45 +194,41 @@ end;
 
 procedure TglImageCropper.ScalingRectDown;
 var
-  rect: TRect;
+  Rect: TRect;
   differenceX, differenceY: integer;
 begin
-  rect := FRect;
-  differenceX := (rect.Right - rect.Left) * 5 div 100;
-  rect.Left := rect.Left + differenceX;
-  rect.Right := rect.Right - differenceX;
+  Rect := FRect;
+  differenceX := (Rect.Right - Rect.Left) * 5 div 100;
+  Rect.Left := Rect.Left + differenceX;
+  Rect.Right := Rect.Right - differenceX;
 
-  differenceY := (rect.Bottom - rect.Top) * 5 div 100;
-  rect.Top := rect.Top + differenceY;
-  rect.Bottom := rect.Bottom - differenceY;
+  differenceY := (Rect.Bottom - Rect.Top) * 5 div 100;
+  Rect.Top := Rect.Top + differenceY;
+  Rect.Bottom := Rect.Bottom - differenceY;
 
-  UpdateRect(rect);
+  UpdateRect(Rect);
 end;
 
 procedure TglImageCropper.ScalingRectUp;
 var
-  rect: TRect;
+  Rect: TRect;
   differenceX, differenceY: integer;
 begin
-  rect := FRect;
-  differenceX := (rect.Right - rect.Left) * 5 div 100;
-  rect.Left := rect.Left - differenceX;
-  rect.Right := rect.Right + differenceX;
+  Rect := FRect;
+  differenceX := (Rect.Right - Rect.Left) * 5 div 100;
+  Rect.Left := Rect.Left - differenceX;
+  Rect.Right := Rect.Right + differenceX;
 
-  differenceY := (rect.Bottom - rect.Top) * 5 div 100;
-  rect.Top := rect.Top - differenceY;
-  rect.Bottom := rect.Bottom + differenceY;
+  differenceY := (Rect.Bottom - Rect.Top) * 5 div 100;
+  Rect.Top := Rect.Top - differenceY;
+  Rect.Bottom := Rect.Bottom + differenceY;
 
-  UpdateRect(rect);
+  UpdateRect(Rect);
 end;
 
 procedure TglImageCropper.SetPhoto(Value: TPicture);
 begin
-  if Value <> fPhoto then
-  begin
-    fPhoto.Assign(Value);
-    invalidate;
-  end;
+  FPhoto.Assign(Value);
 end;
 
 procedure TglImageCropper.UpdateRect(Value: TRect);
