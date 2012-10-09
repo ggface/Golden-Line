@@ -82,6 +82,7 @@ end;
 
 procedure TglImageCropper.DrawMiniBitmap;
 begin
+  SetStretchBltMode(fMiniBitmap.Canvas.Handle, HALFTONE);
   fMiniBitmap.Canvas.CopyRect(Bounds(0, 0, fMiniBitmap.Width,
     fMiniBitmap.Height), fBitmap.Canvas, FRect);
 end;
@@ -99,6 +100,7 @@ var
 begin
   nanoBMP := TBitmap.Create;
   nanoBMP.SetSize(115, 145);
+  SetStretchBltMode(nanoBMP.Canvas.Handle, HALFTONE);
   nanoBMP.Canvas.StretchDraw(Rect(0, 0, 115, 145), fMiniBitmap);
   Result := TJPEGImage.Create;
   Result.Assign(nanoBMP);
