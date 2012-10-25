@@ -3,7 +3,7 @@ unit glShellTreeView;
 interface
 
 uses
-  System.SysUtils, System.Classes, Vcl.Controls, Vcl.ComCtrls, Windows;
+  SysUtils, Classes, Controls, ComCtrls, Windows;
 
 type
   TglShellTreeView = class(TCustomTreeView)
@@ -132,13 +132,13 @@ begin
               Node.HasChildren := true;
           until (FindNext(srChild) <> 0) or Node.HasChildren;
         end;
-        System.SysUtils.FindClose(srChild);
+        SysUtils.FindClose(srChild);
       end;
     until FindNext(sr) <> 0;
   end
   else
     ParentNode.HasChildren := false;
-  System.SysUtils.FindClose(sr);
+  SysUtils.FindClose(sr);
 end;
 
 function TglShellTreeView.SrNodeTree(pTreeNode: TTreeNode;

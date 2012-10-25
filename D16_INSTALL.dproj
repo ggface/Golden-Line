@@ -9,18 +9,10 @@
 			<FrameworkType>VCL</FrameworkType>
 			<ProjectVersion>13.4</ProjectVersion>
 			<Platform Condition="'$(Platform)'==''">Win32</Platform>
+			<Platform>Win32</Platform>
+			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
-			<Base_Win64>true</Base_Win64>
-			<CfgParent>Base</CfgParent>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
-			<Base_Win32>true</Base_Win32>
-			<CfgParent>Base</CfgParent>
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
@@ -34,7 +26,6 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
-			<DCC_UsePackage>rtl;dbrtl;IndyCore;IndySystem;IndyProtocols;$(DCC_UsePackage)</DCC_UsePackage>
 			<DCC_ImageBase>00400000</DCC_ImageBase>
 			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
 			<DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
@@ -51,16 +42,6 @@
 			<DCC_E>false</DCC_E>
 			<DCC_F>false</DCC_F>
 		</PropertyGroup>
-		<PropertyGroup Condition="'$(Base_Win64)'!=''">
-			<DCC_UsePackage>vcl;vclimg;adortl;$(DCC_UsePackage)</DCC_UsePackage>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Base_Win32)'!=''">
-			<DCC_UsePackage>vcl;vclimg;adortl;$(DCC_UsePackage)</DCC_UsePackage>
-			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-			<DCC_Namespace>Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
-			<VerInfo_Locale>1033</VerInfo_Locale>
-			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1)'!=''">
 			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
 			<DCC_DebugInformation>false</DCC_DebugInformation>
@@ -72,7 +53,7 @@
 			<DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
 		</PropertyGroup>
 		<ItemGroup>
-			<DelphiCompile Include="$(MainSource)">
+			<DelphiCompile Include="D16_INSTALL.dpk">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
 			<DCCReference Include="rtl.dcp"/>
@@ -97,6 +78,7 @@
 			<DCCReference Include="src\glSystem.pas"/>
 			<DCCReference Include="src\glViewStateSet.pas"/>
 			<DCCReference Include="src\glButtonPattern.pas"/>
+			<DCCReference Include="src\SubClasses\glIterator.pas"/>
 			<BuildConfiguration Include="Debug">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>
@@ -109,6 +91,8 @@
 				<CfgParent>Base</CfgParent>
 			</BuildConfiguration>
 		</ItemGroup>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
 		<ProjectExtensions>
 			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
 			<Borland.ProjectType>Package</Borland.ProjectType>
@@ -118,7 +102,7 @@
 						<Source Name="MainSource">D16_INSTALL.dpk</Source>
 					</Source>
 					<VersionInfo>
-						<VersionInfo Name="IncludeVerInfo">False</VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
 						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
 						<VersionInfo Name="MajorVer">1</VersionInfo>
 						<VersionInfo Name="MinorVer">0</VersionInfo>
@@ -129,8 +113,8 @@
 						<VersionInfo Name="Special">False</VersionInfo>
 						<VersionInfo Name="Private">False</VersionInfo>
 						<VersionInfo Name="DLL">False</VersionInfo>
-						<VersionInfo Name="Locale">1049</VersionInfo>
-						<VersionInfo Name="CodePage">1251</VersionInfo>
+						<VersionInfo Name="Locale">1033</VersionInfo>
+						<VersionInfo Name="CodePage">1252</VersionInfo>
 					</VersionInfo>
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName"/>
@@ -144,6 +128,10 @@
 						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
 						<VersionInfoKeys Name="Comments"/>
 					</VersionInfoKeys>
+					<Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k150.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dclofficexp150.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+					</Excluded_Packages>
 				</Delphi.Personality>
 				<Platforms>
 					<Platform value="Win64">False</Platform>
@@ -152,6 +140,4 @@
 			</BorlandProject>
 			<ProjectFileVersion>12</ProjectFileVersion>
 		</ProjectExtensions>
-		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
-		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
 	</Project>

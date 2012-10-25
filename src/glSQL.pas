@@ -3,7 +3,7 @@ unit glSQL;
 interface
 
 uses
-  System.SysUtils, System.Classes;
+  SysUtils, Classes;
 
 type
   TglSQLQuery = class(TCollectionItem)

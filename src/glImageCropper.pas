@@ -20,10 +20,10 @@ type
     procedure WMMOUSEWHEEL(var msg: TWMMOUSEWHEEL); message WM_MOUSEWHEEL;
     procedure PictureChanged(Sender: TObject);
     procedure SetPhoto(Value: TPicture);
-    procedure DrawMiniBitmap;
+    procedure DrawMiniBitmap(Scale: boolean);
     procedure ScalingRectUp;
     procedure ScalingRectDown;
-    procedure UpdateRect(Value: TRect);
+    procedure UpdateRect(Value: TRect; Scale: boolean);
   protected
     procedure Paint; override;
     procedure MouseDown(Button: TMouseButton; Shift: TShiftState;
@@ -82,7 +82,7 @@ end;
 
 procedure TglImageCropper.DrawMiniBitmap;
 begin
-  SetStretchBltMode(fMiniBitmap.Canvas.Handle, HALFTONE);
+  SetStretchBltMode(fMiniBitmap.Canvas.Handle, STRETCH_DELETESCANS);
   fMiniBitmap.Canvas.CopyRect(Bounds(0, 0, fMiniBitmap.Width,
     fMiniBitmap.Height), fBitmap.Canvas, FRect);
 end;
@@ -144,7 +144,7 @@ begin
       Rect.Top := FStartRect.Top + (FStartDragY - Y);
       Rect.Bottom := FStartRect.Bottom + (FStartDragY - Y);
     end;
-    UpdateRect(Rect);
+    UpdateRect(Rect, false);
   end;
 end;
 
@@ -152,7 +152,7 @@ procedure TglImageCropper.MouseUp(Button: TMouseButton; Shift: TShiftState;
   X, Y: integer);
 begin
   inherited;
-  fMousePress := False;
+  fMousePress := false;
 end;
 
 procedure TglImageCropper.Paint;
@@ -188,8 +188,8 @@ begin
   begin
     UpdateRect(Bounds((fBitmap.Width div 2) - (fMiniBitmap.Width div 2),
       (fBitmap.Height div 2) - (fMiniBitmap.Height div 2), fMiniBitmap.Width,
-      fMiniBitmap.Height));
-    fEmpty := False;
+      fMiniBitmap.Height), false);
+    fEmpty := false;
   end;
   invalidate;
 end;
@@ -208,7 +208,7 @@ begin
   Rect.Top := Rect.Top + differenceY;
   Rect.Bottom := Rect.Bottom - differenceY;
 
-  UpdateRect(Rect);
+  UpdateRect(Rect, true);
 end;
 
 procedure TglImageCropper.ScalingRectUp;
@@ -225,7 +225,7 @@ begin
   Rect.Top := Rect.Top - differenceY;
   Rect.Bottom := Rect.Bottom + differenceY;
 
-  UpdateRect(Rect);
+  UpdateRect(Rect, true);
 end;
 
 procedure TglImageCropper.SetPhoto(Value: TPicture);
@@ -233,7 +233,7 @@ begin
   FPhoto.Assign(Value);
 end;
 
-procedure TglImageCropper.UpdateRect(Value: TRect);
+procedure TglImageCropper.UpdateRect;
 begin
   // if Value <> FRect then
   // begin
@@ -241,7 +241,7 @@ begin
     and (Value.Top <= fBitmap.Height) then
   begin
     FRect := Value;
-    DrawMiniBitmap;
+    DrawMiniBitmap(Scale);
     invalidate;
   end;
   // end;

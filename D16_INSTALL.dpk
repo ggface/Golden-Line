@@ -22,9 +22,9 @@ package D16_INSTALL;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
 {$DESCRIPTION '!Golden Line (by GangrenaGastrit)'}
 {$IMPLICITBUILD ON}
+{$DEFINE DEBUG}
 
 requires
   rtl,
@@ -50,6 +50,7 @@ contains
   glSuicide in 'src\glSuicide.pas',
   glSystem in 'src\glSystem.pas',
   glViewStateSet in 'src\glViewStateSet.pas',
-  glButtonPattern in 'src\glButtonPattern.pas';
+  glButtonPattern in 'src\glButtonPattern.pas',
+  glIterator in 'src\SubClasses\glIterator.pas';
 
 end.

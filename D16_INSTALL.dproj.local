@@ -1,2 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject/>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2012.10.25 13:53:39.483,=C:\Users\gg\Documents\GitHub\Golden-Line\Unit1.pas</Transaction>
+    <Transaction>2012.10.25 13:59:12.946,C:\Users\gg\Documents\GitHub\Golden-Line\src\SubClasses\glIterator.pas=C:\Users\gg\Documents\GitHub\Golden-Line\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>
