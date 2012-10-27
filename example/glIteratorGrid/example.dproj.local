@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.961,=C:\Users\gg\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2012.10.27 06:32:26.444,=C:\Users\gg\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2012.10.27 06:53:26.462,C:\Users\gg\Documents\GitHub\Golden-Line\example\glIteratorGrid\main.dfm=C:\Users\gg\Documents\RAD Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2012.10.27 06:53:26.462,C:\Users\gg\Documents\GitHub\Golden-Line\example\glIteratorGrid\main.pas=C:\Users\gg\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2012.10.27 06:53:39.352,C:\Users\gg\Documents\GitHub\Golden-Line\example\glIteratorGrid\example.dproj=C:\Users\gg\Documents\RAD Studio\Projects\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

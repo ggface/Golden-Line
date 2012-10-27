@@ -51,6 +51,7 @@ contains
   glSystem in 'src\glSystem.pas',
   glViewStateSet in 'src\glViewStateSet.pas',
   glButtonPattern in 'src\glButtonPattern.pas',
-  glIterator in 'src\SubClasses\glIterator.pas';
+  glIterator in 'src\SubClasses\glIterator.pas',
+  glIteratorGrid in 'src\SubClasses\glIteratorGrid.pas';
 
 end.
