@@ -28,9 +28,10 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure Assign(value: TglButtonPattern);
+    procedure AssignPattern(value: TglButtonPattern);
   published
-    property ImageLeave: TPicture read fLeave write SetLeaveImage;
+    property ImageLeave: TPicture read fLeave
+    write SetLeaveImage;
     property ImageEnter: TPicture read fEnter write SetEnterImage;
     property ImageDown: TPicture read fDown write SetDownImage;
     property OnMouseEnter;
@@ -51,7 +52,7 @@ begin
   RegisterComponents('Golden Line', [TglButton]);
 end;
 
-procedure TglButton.Assign(value: TglButtonPattern);
+procedure TglButton.AssignPattern(value: TglButtonPattern);
 begin
   fDown.Assign(value.ImageDown);
   fLeave.Assign(value.ImageLeave);

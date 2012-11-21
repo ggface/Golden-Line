@@ -15,6 +15,16 @@
 		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
 			<Base>true</Base>
 		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+			<Base_Win64>true</Base_Win64>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+			<Base_Win32>true</Base_Win32>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
 			<Cfg_1>true</Cfg_1>
 			<CfgParent>Base</CfgParent>
@@ -26,6 +36,7 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_UsePackage>rtl;dbrtl;IndyCore;IndySystem;IndyProtocols;$(DCC_UsePackage)</DCC_UsePackage>
 			<DCC_ImageBase>00400000</DCC_ImageBase>
 			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
 			<DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
@@ -42,6 +53,12 @@
 			<DCC_E>false</DCC_E>
 			<DCC_F>false</DCC_F>
 		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base_Win64)'!=''">
+			<DCC_UsePackage>vcl;vclimg;adortl;cxLibraryD16;dxThemeD16;dxGDIPlusD16;dxCoreD16;$(DCC_UsePackage)</DCC_UsePackage>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base_Win32)'!=''">
+			<DCC_UsePackage>vcl;vclimg;adortl;cxLibraryD16;dxThemeD16;dxGDIPlusD16;dxCoreD16;$(DCC_UsePackage)</DCC_UsePackage>
+		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1)'!=''">
 			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
 			<DCC_DebugInformation>false</DCC_DebugInformation>
@@ -53,7 +70,7 @@
 			<DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
 		</PropertyGroup>
 		<ItemGroup>
-			<DelphiCompile Include="D16_INSTALL.dpk">
+			<DelphiCompile Include="$(MainSource)">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
 			<DCCReference Include="rtl.dcp"/>

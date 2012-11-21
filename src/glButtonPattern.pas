@@ -52,20 +52,17 @@ end;
 
 procedure TglButtonPattern.SetImageDown(value: TPicture);
 begin
-  if value <> FImageDown then
-    FImageDown := value;
+  FImageDown.Assign(value);
 end;
 
 procedure TglButtonPattern.SetImageEnter(value: TPicture);
 begin
-  if value <> FImageEnter then
-    FImageEnter := value;
+  FImageEnter.Assign(value);
 end;
 
 procedure TglButtonPattern.SetImageLeave(value: TPicture);
 begin
-  if value <> FImageLeave then
-    FImageLeave := value;
+  FImageLeave.Assign(value);
 end;
 
 end.
