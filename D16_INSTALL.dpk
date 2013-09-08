@@ -1,6 +1,7 @@
 package D16_INSTALL;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -22,9 +23,10 @@ package D16_INSTALL;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION '!Golden Line (by GangrenaGastrit)'}
 {$IMPLICITBUILD ON}
-{$DEFINE DEBUG}
 
 requires
   rtl,
@@ -52,6 +54,7 @@ contains
   glViewStateSet in 'src\glViewStateSet.pas',
   glButtonPattern in 'src\glButtonPattern.pas',
   glIterator in 'src\SubClasses\glIterator.pas',
-  glIteratorGrid in 'src\SubClasses\glIteratorGrid.pas';
+  glIteratorGrid in 'src\SubClasses\glIteratorGrid.pas',
+  glTools in 'src\glTools.pas';
 
 end.
